@@ -1,23 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import About from './components/About';
+import Navbar from './components/Navbar';
+import TextForm from './components/TextForm';
+import {useState} from 'react'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 function App() {
+
+  // Dark Mode Settings
+
+  const [currentMode, toggleMode] = useState(false); //Initially, Dark mode is off
+
+  const modeStates = {
+      currentMode : currentMode,
+      toggleMode : toggleMode
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* Passing Props to react Component */}
+      <Router>
+        <Navbar title = "TextUtils" mode = {modeStates}/>
+        <Routes>
+          <Route exact path="/" element={<TextForm heading = "Enter the text below" mode = {modeStates}/>} />
+          <Route exact path="/about" element={<About mode = {modeStates}/>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
